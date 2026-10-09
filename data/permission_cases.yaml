@@ -1,0 +1,47 @@
+- case_name: "只读Token-查询订单-成功"
+  token: "readonly_token"
+  method: "GET"
+  endpoint: "/api/order/query"
+  expected_status: 200
+
+- case_name: "只读Token-修改订单-越权拦截"
+  token: "readonly_token"
+  method: "POST"
+  endpoint: "/api/order/update"
+  expected_status: 403
+
+- case_name: "写入Token-修改订单-成功"
+  token: "write_token"
+  method: "POST"
+  endpoint: "/api/order/update"
+  expected_status: 200
+
+- case_name: "写入Token-查询订单-权限不足"
+  token: "write_token"
+  method: "GET"
+  endpoint: "/api/order/query"
+  expected_status: 403
+
+- case_name: "发布Token-发布包-成功"
+  token: "publish_token"
+  method: "POST"
+  endpoint: "/api/package/publish"
+  expected_status: 200
+
+- case_name: "发布Token-修改订单-越权拦截"
+  token: "publish_token"
+  method: "POST"
+  endpoint: "/api/order/update"
+  expected_status: 403
+
+- case_name: "无Token-查询订单-拦截"
+  token: ""
+  method: "GET"
+  endpoint: "/api/order/query"
+  expected_status: 401
+
+- case_name: "非法Token-修改订单-拦截"
+  token: "invalid_token_123"
+  method: "POST"
+  endpoint: "/api/order/update"
+  expected_status: 401
